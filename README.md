@@ -14,3 +14,23 @@
 ## 制作過程
 
 **[こちらをご覧ください](https://zenn.dev/kapi_star/scraps/c2d53177f8e28e)**
+
+## 開発環境構築
+
+.env ファイルをルートディレクトリに作成。中身は以下です。値は各自設定してください。
+
+```
+#swaggerUi
+SWAGGERUIPORT
+CONTAINER_SWAGGERUIPORT
+
+#backend
+BACKENDPORT
+CONTAINER_BACKENDPORT
+```
+
+.env ファイルを作成後、以下のコマンドで docker 起動
+
+```
+docker-compose up --build
+```
