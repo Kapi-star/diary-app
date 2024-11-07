@@ -5,8 +5,15 @@ services:
     image: swaggerapi/swagger-ui
     container_name: "swagger-ui"
     ports:
-      - "8000:8080"
+      - "${SWAGGERUIPORT}:${CONTAINER_SWAGGERUIPORT}"
     volumes:
       - ./api/openapi.yaml:/openapi.yaml
     environment:
       SWAGGER_JSON: /openapi.yaml
+  backend:
+    container_name: "backend-container"
+    build: ./backend
+    ports:
+      - "${BACKENDPORT}:${CONTAINER_BACKENDPORT}"
+    volumes:
+      - ./backend:/backend

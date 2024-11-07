@@ -20,13 +20,13 @@ paths:
       description: 日記内容の一部を全件取得します
       operationId: getDiary
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Diary'          
-        '500':
+                $ref: "#/components/schemas/Diary"
+        "500":
           description: その他のエラー
   /diary/create:
     post:
@@ -39,14 +39,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DiaryOne'
+              $ref: "#/components/schemas/DiaryOne"
         required: true
       responses:
-        '200':
+        "200":
           description: 成功
-        '400':
+        "400":
           description: バリデーションエラー
-        '500':
+        "500":
           description: その他のエラー
   /diary/{diaryId}:
     get:
@@ -56,22 +56,22 @@ paths:
       description: idに合致する日記を一件取得します
       operationId: getDiaryById
       parameters:
-      - name: "diaryId"
-        in: "path"
-        description: 取得したい日記のID
-        required: true
-        schema:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
+        - name: "diaryId"
+          in: "path"
+          description: 取得したい日記のID
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DiaryOne'          
-        '500':
+                $ref: "#/components/schemas/DiaryOne"
+        "500":
           description: その他のエラー
   /diary/{diaryId}/update:
     patch:
@@ -81,26 +81,26 @@ paths:
       description: idに合致する日記をを一件更新します
       operationId: updateDiary
       parameters:
-      - name: "diaryId"
-        in: "path"
-        description: 更新したい日記のID
-        required: true
-        schema:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
+        - name: "diaryId"
+          in: "path"
+          description: 更新したい日記のID
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DiaryOne'
+              $ref: "#/components/schemas/DiaryOne"
         required: true
       responses:
-        '200':
+        "200":
           description: 成功
-        '400':
+        "400":
           description: バリデーションエラー
-        '500':
+        "500":
           description: その他のエラー
   /diary/{diaryId}/delete:
     delete:
@@ -110,18 +110,18 @@ paths:
       description: idに合致する日記を一件削除します
       operationId: deleteDiary
       parameters:
-      - name: "diaryId"
-        in: "path"
-        description: 更新したい日記のID
-        required: true
-        schema:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
+        - name: "diaryId"
+          in: "path"
+          description: 更新したい日記のID
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
       responses:
-        '200':
+        "200":
           description: 成功
-        '500':
+        "500":
           description: その他のエラー
   /todo:
     get:
@@ -131,13 +131,13 @@ paths:
       description: タスク内容の一部を全件取得します
       operationId: getTodo
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Todo'
-        '500':
+                $ref: "#/components/schemas/Todo"
+        "500":
           description: その他のエラー
   /todo/create:
     post:
@@ -150,14 +150,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TodoOne'
+              $ref: "#/components/schemas/TodoOne"
         required: true
       responses:
-        '200':
+        "200":
           description: 成功
-        '400':
+        "400":
           description: バリデーションエラー
-        '500':
+        "500":
           description: その他のエラー
   /todo/{todoId}:
     get:
@@ -167,22 +167,22 @@ paths:
       description: idに合致するタスクを一件取得します
       operationId: getTodoById
       parameters:
-      - name: "todoId"
-        in: "path"
-        description: 取得したいタスクのID
-        required: true
-        schema:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
+        - name: "todoId"
+          in: "path"
+          description: 取得したいタスクのID
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TodoOne'          
-        '500':
+                $ref: "#/components/schemas/TodoOne"
+        "500":
           description: その他のエラー
   /todo/{todoId}/update:
     patch:
@@ -192,26 +192,26 @@ paths:
       description: idに合致するタスクを一件更新します
       operationId: updateTodo
       parameters:
-      - name: "todoId"
-        in: "path"
-        description: 更新したいタスクのID
-        required: true
-        schema:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
+        - name: "todoId"
+          in: "path"
+          description: 更新したいタスクのID
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TodoOne'
+              $ref: "#/components/schemas/TodoOne"
         required: true
       responses:
-        '200':
+        "200":
           description: 成功
-        '400':
+        "400":
           description: バリデーションエラー
-        '500':
+        "500":
           description: その他のエラー
   /todo/{todoId}/delete:
     delete:
@@ -221,18 +221,18 @@ paths:
       description: idに合致するタスクを一件削除します
       operationId: deleteTodo
       parameters:
-      - name: "todoId"
-        in: "path"
-        description: 更新したいタスクのID
-        required: true
-        schema:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
+        - name: "todoId"
+          in: "path"
+          description: 更新したいタスクのID
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
       responses:
-        '200':
+        "200":
           description: 成功
-        '500':
+        "500":
           description: その他のエラー
   /user/create:
     post:
@@ -245,13 +245,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
       responses:
-        '200':
+        "200":
           description: 成功
-        '400':
+        "400":
           description: バリデーションエラー
-        '500':
+        "500":
           description: その他のエラー
   /user/login:
     post:
@@ -264,35 +264,35 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginUser'
+              $ref: "#/components/schemas/LoginUser"
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginUserResponse'          
-        '500':
+                $ref: "#/components/schemas/LoginUserResponse"
+        "500":
           description: その他のエラー
   /user/update:
     patch:
       tags:
         - user
-      summary:  ユーザー更新
+      summary: ユーザー更新
       description: idに合致するユーザーを一件更新します
       operationId: updateUser
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TodoOne'
+              $ref: "#/components/schemas/TodoOne"
         required: true
       responses:
-        '200':
+        "200":
           description: 成功
-        '400':
+        "400":
           description: バリデーションエラー
-        '500':
+        "500":
           description: その他のエラー
   /user/delete:
     delete:
@@ -310,9 +310,9 @@ paths:
             example: "123e4567-e89b-12d3-a456-426614174000"
           required: true
       responses:
-        '200':
+        "200":
           description: 成功
-        '500':
+        "500":
           description: その他のエラー
 components:
   schemas:
@@ -325,10 +325,10 @@ components:
       properties:
         StartTime:
           type: string
-          pattern: '^(2[0-3]|[0-9]):([0-5][0-9])$'
+          pattern: "^(2[0-3]|[0-9]):([0-5][0-9])$"
         EndTime:
           type: string
-          pattern: '^(2[0-3]|[0-9]):([0-5][0-9])$'
+          pattern: "^(2[0-3]|[0-9]):([0-5][0-9])$"
         todo:
           type: string
           example: 仕事
@@ -373,9 +373,9 @@ components:
           items:
             type: integer
         timeSchedule:
-          $ref: '#/components/schemas/timeSchedule'
+          $ref: "#/components/schemas/timeSchedule"
         timeScheduleResult:
-          $ref: '#/components/schemas/timeSchedule'
+          $ref: "#/components/schemas/timeSchedule"
         pros:
           type: array
           items:
@@ -440,8 +440,8 @@ components:
           type: string
           example: 朝ごはんを食べる
         todoDetail:
-            type: string
-            example: りんごとパンを食べる
+          type: string
+          example: りんごとパンを食べる
         startDate:
           type: string
           format: date
@@ -473,7 +473,7 @@ components:
           example: Kapi@email.com
         password:
           type: string
-          example: '12345abcde'
+          example: "12345abcde"
     LoginUser:
       required:
         - email
@@ -485,7 +485,7 @@ components:
           example: Kapi@email.com
         password:
           type: string
-          example: '12345abcde'
+          example: "12345abcde"
     LoginUserResponse:
       required:
         - ispassed
