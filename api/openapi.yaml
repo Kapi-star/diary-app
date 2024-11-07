@@ -1,0 +1,506 @@
+openapi: 3.0.3
+info:
+  title: 今日のまとめアプリ
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: diary
+    description: 毎日の日記
+  - name: todo
+    description: 毎日のタスク
+  - name: user
+    description: ユーザー
+paths:
+  /diary:
+    get:
+      tags:
+        - diary
+      summary: 日記全件取得
+      description: 日記内容の一部を全件取得します
+      operationId: getDiary
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Diary'          
+        '500':
+          description: その他のエラー
+  /diary/create:
+    post:
+      tags:
+        - diary
+      summary: 日記作成
+      description: 日記を新規作成します
+      operationId: createDiary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiaryOne'
+        required: true
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: バリデーションエラー
+        '500':
+          description: その他のエラー
+  /diary/{diaryId}:
+    get:
+      tags:
+        - diary
+      summary: 日記一件取得
+      description: idに合致する日記を一件取得します
+      operationId: getDiaryById
+      parameters:
+      - name: "diaryId"
+        in: "path"
+        description: 取得したい日記のID
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiaryOne'          
+        '500':
+          description: その他のエラー
+  /diary/{diaryId}/update:
+    patch:
+      tags:
+        - diary
+      summary: 日記更新
+      description: idに合致する日記をを一件更新します
+      operationId: updateDiary
+      parameters:
+      - name: "diaryId"
+        in: "path"
+        description: 更新したい日記のID
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiaryOne'
+        required: true
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: バリデーションエラー
+        '500':
+          description: その他のエラー
+  /diary/{diaryId}/delete:
+    delete:
+      tags:
+        - diary
+      summary: 日記削除
+      description: idに合致する日記を一件削除します
+      operationId: deleteDiary
+      parameters:
+      - name: "diaryId"
+        in: "path"
+        description: 更新したい日記のID
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      responses:
+        '200':
+          description: 成功
+        '500':
+          description: その他のエラー
+  /todo:
+    get:
+      tags:
+        - todo
+      summary: タスク全件取得
+      description: タスク内容の一部を全件取得します
+      operationId: getTodo
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '500':
+          description: その他のエラー
+  /todo/create:
+    post:
+      tags:
+        - todo
+      summary: 　タスク作成
+      description: タスクを新規作成します
+      operationId: createTodo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoOne'
+        required: true
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: バリデーションエラー
+        '500':
+          description: その他のエラー
+  /todo/{todoId}:
+    get:
+      tags:
+        - todo
+      summary: タスク一件取得
+      description: idに合致するタスクを一件取得します
+      operationId: getTodoById
+      parameters:
+      - name: "todoId"
+        in: "path"
+        description: 取得したいタスクのID
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoOne'          
+        '500':
+          description: その他のエラー
+  /todo/{todoId}/update:
+    patch:
+      tags:
+        - todo
+      summary: タスク更新
+      description: idに合致するタスクを一件更新します
+      operationId: updateTodo
+      parameters:
+      - name: "todoId"
+        in: "path"
+        description: 更新したいタスクのID
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoOne'
+        required: true
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: バリデーションエラー
+        '500':
+          description: その他のエラー
+  /todo/{todoId}/delete:
+    delete:
+      tags:
+        - todo
+      summary: タスク削除
+      description: idに合致するタスクを一件削除します
+      operationId: deleteTodo
+      parameters:
+      - name: "todoId"
+        in: "path"
+        description: 更新したいタスクのID
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      responses:
+        '200':
+          description: 成功
+        '500':
+          description: その他のエラー
+  /user/create:
+    post:
+      tags:
+        - user
+      summary: ユーザー作成
+      description: ユーザーを新規作成します
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: バリデーションエラー
+        '500':
+          description: その他のエラー
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: ユーザーログイン
+      description: emailとパスワードを照合します
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserResponse'          
+        '500':
+          description: その他のエラー
+  /user/update:
+    patch:
+      tags:
+        - user
+      summary:  ユーザー更新
+      description: idに合致するユーザーを一件更新します
+      operationId: updateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoOne'
+        required: true
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: バリデーションエラー
+        '500':
+          description: その他のエラー
+  /user/delete:
+    delete:
+      tags:
+        - user
+      summary: ユーザー削除
+      description: idに合致するユーザーを一件削除します
+      operationId: deleteUser
+      parameters:
+        - in: header
+          name: UserId
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
+          required: true
+      responses:
+        '200':
+          description: 成功
+        '500':
+          description: その他のエラー
+components:
+  schemas:
+    timeSchedule:
+      required:
+        - StartTime
+        - EndTime
+        - todo
+      type: object
+      properties:
+        StartTime:
+          type: string
+          pattern: '^(2[0-3]|[0-9]):([0-5][0-9])$'
+        EndTime:
+          type: string
+          pattern: '^(2[0-3]|[0-9]):([0-5][0-9])$'
+        todo:
+          type: string
+          example: 仕事
+    Diary:
+      type: array
+      items:
+        required:
+          - id
+          - date
+          - title
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
+          date:
+            type: string
+            format: date
+          title:
+            type: string
+            example: 1日個人開発
+    DiaryOne:
+      required:
+        - id
+        - date
+        - title
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        date:
+          type: string
+          format: date
+        title:
+          type: string
+          example: 1日個人開発
+        todoId:
+          type: array
+          items:
+            type: integer
+        timeSchedule:
+          $ref: '#/components/schemas/timeSchedule'
+        timeScheduleResult:
+          $ref: '#/components/schemas/timeSchedule'
+        pros:
+          type: array
+          items:
+            type: string
+            example: 時間通り行動できた
+        cons:
+          type: array
+          items:
+            type: string
+            example: 時間通り行動できなかった
+        improvements:
+          type: array
+          items:
+            type: string
+            example: 時間通り行動するために時計を見る
+        freeComent:
+          type: string
+          example: 今日は晴れだった。楽しかった。
+    Todo:
+      type: array
+      items:
+        required:
+          - id
+          - title
+          - startDate
+          - endDate
+          - isFinished
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
+          title:
+            type: string
+            example: 朝ごはんを食べる
+          startDate:
+            type: string
+            format: date
+            example: 2024-10-07
+          endDate:
+            type: string
+            format: date
+            example: 2024-11-07
+          isFinished:
+            type: boolean
+            example: false
+    TodoOne:
+      required:
+        - id
+        - title
+        - startDate
+        - endDate
+        - isFinished
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        title:
+          type: string
+          example: 朝ごはんを食べる
+        todoDetail:
+            type: string
+            example: りんごとパンを食べる
+        startDate:
+          type: string
+          format: date
+          example: 2024-10-07
+        endDate:
+          type: string
+          format: date
+          example: 2024-11-07
+        isFinished:
+          type: boolean
+          example: false
+    User:
+      required:
+        - id
+        - username
+        - email
+        - password
+      type: object
+      properties:
+        userid:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        username:
+          type: string
+          example: かぴ
+        email:
+          type: string
+          example: Kapi@email.com
+        password:
+          type: string
+          example: '12345abcde'
+    LoginUser:
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+          example: Kapi@email.com
+        password:
+          type: string
+          example: '12345abcde'
+    LoginUserResponse:
+      required:
+        - ispassed
+      type: object
+      properties:
+        ispassed:
+          type: boolean
+          example: true
+        userId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        username:
+          type: string
+          example: かぴ
+        email:
+          type: string
+          example: Kapi@email.com
