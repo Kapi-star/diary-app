@@ -17,3 +17,16 @@ services:
       - "${BACKENDPORT}:${CONTAINER_BACKENDPORT}"
     volumes:
       - ./backend:/backend
+  db:
+    image: postgres:17
+    container_name: postgres-db
+    ports:
+      - "${DBPORT}:${CONTAINER_DBPORT}"
+    volumes:
+      - db-store:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "DialyAppDB"
+volumes:
+  db-store:
