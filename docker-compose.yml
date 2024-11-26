@@ -12,7 +12,11 @@ services:
       SWAGGER_JSON: /openapi.yaml
   backend:
     container_name: "backend-container"
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
     ports:
       - "${BACKENDPORT}:${CONTAINER_BACKENDPORT}"
     volumes:
@@ -25,8 +29,9 @@ services:
     volumes:
       - db-store:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_DB: "DialyAppDB"
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_NAME}"
 volumes:
   db-store:
+  
