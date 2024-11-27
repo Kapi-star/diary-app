@@ -14,11 +14,11 @@ export class CreateTodoDTO {
   todoDetail: string;
 
   @IsDate()
-  @IsNotEmpty()
+  @IsOptional()
   startDate: Date;
 
   @IsDate()
-  @IsNotEmpty()
+  @IsOptional()
   endDate: Date;
 
   @IsBoolean()
