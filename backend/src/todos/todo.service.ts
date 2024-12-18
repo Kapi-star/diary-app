@@ -16,6 +16,7 @@ export class TodoService {
       const todo = this.todoRepository.create({
         ...dto,
         id: uuidv4(),
+        isFinished: false,
       });
 
       return await this.todoRepository.save(todo);

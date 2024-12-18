@@ -6,21 +6,21 @@ import {
 
 @Entity('todo')
 export class TodoEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid') 
   id: string;
 
   @Column('varchar',  {length: 30, comment: 'タイトル' })
   title: string;
 
   @Column('text',  {comment: '内容', nullable: true })
-  todoDetail: string;
+  todoDetail?: string;
 
   @Column('date', { comment: '始める日', nullable: true })
-  startDate: Date;
+  startDate?: Date;
 
   @Column('date', { comment: '終わる日', nullable: true })
-  endDate: Date;
+  endDate?: Date;
 
-  @Column('boolean', { comment: '完了したか' })
+  @Column('boolean', { comment: '完了したか', default: false })
   isFinished: boolean;
 }

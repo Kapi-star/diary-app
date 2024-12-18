@@ -1,5 +1,5 @@
 import {
-  IsBoolean,
+  // IsBoolean,
   IsDate,
   IsNotEmpty,
   IsOptional,
@@ -8,10 +8,6 @@ import {
 } from 'class-validator';
 
 export class CreateTodoDTO {
-  @IsUUID()
-  @IsOptional()
-  id?: string;
-
   @IsString()
   @IsNotEmpty()
   title: string;
@@ -27,8 +23,4 @@ export class CreateTodoDTO {
   @IsDate()
   @IsOptional()
   endDate: Date;
-
-  @IsBoolean()
-  @IsNotEmpty()
-  isFinished: boolean;
 }
