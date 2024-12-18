@@ -1,9 +1,16 @@
-import { IsBoolean, IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateTodoDTO {
-  @IsString()
-  @IsNotEmpty()
-  id: string;
+  @IsUUID()
+  @IsOptional()
+  id?: string;
 
   @IsString()
   @IsNotEmpty()
