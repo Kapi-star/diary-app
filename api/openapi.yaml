@@ -43,7 +43,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DiaryOne"
+              $ref: "#/components/schemas/CreateDiaryOne"
         required: true
       responses:
         "200":
@@ -51,9 +51,9 @@ paths:
         "400":
           description: バリデーションエラー
           content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Error"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         "500":
           description: その他のサーバー側のエラー
           content:
@@ -94,7 +94,7 @@ paths:
       tags:
         - diary
       summary: 日記更新
-      description: idに合致する日記をを一件更新します
+      description: idに合致する日記を一件更新します
       operationId: updateDiary
       parameters:
         - name: "diaryId"
@@ -109,7 +109,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DiaryOne"
+              $ref: "#/components/schemas/CreateDiaryOne"
         required: true
       responses:
         "200":
@@ -117,9 +117,9 @@ paths:
         "400":
           description: バリデーションエラー
           content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Error"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         "500":
           description: その他のサーバー側のエラー
           content:
@@ -182,7 +182,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TodoOne"
+              $ref: "#/components/schemas/CreateTodoOne"
         required: true
       responses:
         "200":
@@ -190,9 +190,9 @@ paths:
         "400":
           description: バリデーションエラー
           content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Error"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         "500":
           description: その他のサーバー側のエラー
           content:
@@ -248,7 +248,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TodoOne"
+              $ref: "#/components/schemas/CreateTodoOne"
         required: true
       responses:
         "200":
@@ -256,9 +256,9 @@ paths:
         "400":
           description: バリデーションエラー
           content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Error"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         "500":
           description: その他のサーバー側のエラー
           content:
@@ -308,9 +308,9 @@ paths:
         "400":
           description: バリデーションエラー
           content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Error"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         "500":
           description: その他のサーバー側のエラー
           content:
@@ -353,7 +353,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TodoOne"
+              $ref: "#/components/schemas/UpdateUser"
         required: true
       responses:
         "200":
@@ -361,9 +361,9 @@ paths:
         "400":
           description: バリデーションエラー
           content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Error"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         "500":
           description: その他のサーバー側のエラー
           content:
@@ -397,21 +397,27 @@ paths:
 components:
   schemas:
     timeSchedule:
-      required:
-        - StartTime
-        - EndTime
-        - todo
-      type: object
-      properties:
-        StartTime:
-          type: string
-          pattern: "^(2[0-3]|[0-9]):([0-5][0-9])$"
-        EndTime:
-          type: string
-          pattern: "^(2[0-3]|[0-9]):([0-5][0-9])$"
-        todo:
-          type: string
-          example: 仕事
+      type: array
+      items:
+        required:
+          - StartTime
+          - EndTime
+          - todo
+        type: object
+        properties:
+          StartTime:
+            type: string
+            format: 'date-time'
+            example: '2024-10-07T14:30:00'
+            description: '予定のの開始日時 (年-月-日T時:分:秒形式)'
+          EndTime:
+            type: string
+            format: 'date-time'
+            example: '2024-10-07T15:30:00'
+            description: '予定のの終了日時 (年-月-日T時:分:秒形式)'
+          todo:
+            type: string
+            example: 仕事
     Diary:
       type: array
       items:
@@ -431,17 +437,12 @@ components:
           title:
             type: string
             example: 1日個人開発
-    DiaryOne:
+    CreateDiaryOne:
       required:
-        - id
         - date
         - title
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
         date:
           type: string
           format: date
@@ -451,7 +452,8 @@ components:
         todoId:
           type: array
           items:
-            type: integer
+            type: string
+            format: uuid
         timeSchedule:
           $ref: "#/components/schemas/timeSchedule"
         timeScheduleResult:
@@ -474,14 +476,60 @@ components:
         freeComent:
           type: string
           example: 今日は晴れだった。楽しかった。
+    DiaryOne:
+      required:
+        - id
+        - date
+        - title
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        date:
+          type: string
+          format: date
+        title:
+          type: string
+          example: 1日個人開発
+        todoId:
+          type: array
+          items:
+            type: string
+            format: uuid
+        timeSchedule:
+          $ref: "#/components/schemas/timeSchedule"
+        timeScheduleResult:
+          $ref: "#/components/schemas/timeSchedule"
+        pros:
+          type: array
+          items:
+            type: string
+            example: 時間通り行動できた
+            description: '良かったところ'
+        cons:
+          type: array
+          items:
+            type: string
+            example: 時間通り行動できなかった
+            description: '良くなかったところ'
+        improvements:
+          type: array
+          items:
+            type: string
+            example: 時間通り行動するために時計を見る
+            description: '改善点'
+        freeComent:
+          type: string
+          example: 今日は晴れだった。楽しかった。
+          description: 'フリーコメント'
     Todo:
       type: array
       items:
         required:
           - id
           - title
-          - startDate
-          - endDate
           - isFinished
         type: object
         properties:
@@ -494,21 +542,40 @@ components:
             example: 朝ごはんを食べる
           startDate:
             type: string
-            format: date
-            example: 2024-10-07
-          endDate:
-            type: string
-            format: date
-            example: 2024-11-07
+            format: 'date-time'
+            example: '2024-10-07T14:30:00'
+            description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
+          timeRequired:
+            type: integer
+            example: 60
+            description: 'タスクの所要時間'
           isFinished:
             type: boolean
             example: false
+    CreateTodoOne:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          example: 朝ごはんを食べる
+        todoDetail:
+          type: string
+          example: りんごとパンを食べる
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2024-10-07T14:30:00'
+          description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
+        timeRequired:
+            type: integer
+            example: 60
+            description: 'タスクの所要時間'
     TodoOne:
       required:
         - id
         - title
-        - startDate
-        - endDate
         - isFinished
       type: object
       properties:
@@ -524,27 +591,23 @@ components:
           example: りんごとパンを食べる
         startDate:
           type: string
-          format: date
-          example: 2024-10-07
-        endDate:
-          type: string
-          format: date
-          example: 2024-11-07
+          format: 'date-time'
+          example: '2024-10-07T14:30:00'
+          description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
+        timeRequired:
+            type: integer
+            example: 60
+            description: 'タスクの所要時間'
         isFinished:
           type: boolean
           example: false
     User:
       required:
-        - id
         - username
         - email
         - password
       type: object
       properties:
-        userid:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
         username:
           type: string
           example: かぴ
@@ -584,6 +647,27 @@ components:
         email:
           type: string
           example: Kapi@email.com
+    UpdateUser:
+      required:
+        - userid
+        - username
+        - email
+        - password
+      type: object
+      properties:
+        userid:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        username:
+          type: string
+          example: かぴ
+        email:
+          type: string
+          example: Kapi@email.com
+        password:
+          type: string
+          example:  "12345abcde"
     Error:
       type: object
       properties:
