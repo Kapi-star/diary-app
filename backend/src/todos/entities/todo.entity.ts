@@ -18,8 +18,8 @@ export class TodoEntity {
   @Column('date', { comment: '始める日', nullable: true })
   startDate?: Date;
 
-  @Column('date', { comment: '終わる日', nullable: true })
-  endDate?: Date;
+  @Column('integer', { comment: 'かける時間（分）', nullable: true })
+  timeRequired?: number;
 
   @Column('boolean', { comment: '完了したか', default: false })
   isFinished: boolean;

@@ -20,5 +20,17 @@ export class TodoService {
       });
 
       return await this.todoRepository.save(todo);
+  
+    }
+  async getAllTodos(): Promise<TodoEntity[]> {
+      return await this.todoRepository.find({
+        select: {
+            id: true,
+            title: true,
+            startDate: true,
+            timeRequired:true,
+            isFinished: true,
+        },
+    })
   }
 }
