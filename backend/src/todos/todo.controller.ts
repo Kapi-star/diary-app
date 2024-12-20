@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Post,
+  Get,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
@@ -30,6 +31,24 @@ export class TodoController {
         );
       }
 
+      throw new HttpException(
+        {
+          message: 'その他のサーバー側のエラー: ' + err.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Get()
+  async fetchAllTodo(): Promise<any> {
+    try {
+      const todos = await this.todoService.getAllTodos();
+      return {
+        statusCode: HttpStatus.OK,
+        data: todos,
+      };
+    } catch (err) {
       throw new HttpException(
         {
           message: 'その他のサーバー側のエラー: ' + err.message,
