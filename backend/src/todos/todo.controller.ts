@@ -5,6 +5,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Param,
 } from '@nestjs/common';
 import { CreateTodoDTO } from './dto/create-todo.dto';
 import { TodoService } from './todo.service';
@@ -40,10 +41,10 @@ export class TodoController {
     }
   }
 
-  @Get()
-  async fetchAllTodo(): Promise<any> {
+  @Get(':id')
+  async fetchAllTodo(@Param('id') id: string): Promise<any> {
     try {
-      const todos = await this.todoService.getAllTodos();
+      const todos = await this.todoService.getTodoOne(id);
       return {
         statusCode: HttpStatus.OK,
         data: todos,
