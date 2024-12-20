@@ -155,7 +155,7 @@ paths:
     get:
       tags:
         - todo
-      summary: タスク全件取得
+      summary: タスク一覧取得
       description: タスク内容の一部を全件取得します
       operationId: getTodo
       responses:
@@ -164,7 +164,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Todo"
+                $ref: "#/components/schemas/Todos"
         "500":
           description: その他のサーバー側のエラー
           content:
@@ -203,7 +203,7 @@ paths:
     get:
       tags:
         - todo
-      summary: タスク一件取得
+      summary: タスク詳細取得
       description: idに合致するタスクを一件取得します
       operationId: getTodoById
       parameters:
@@ -248,7 +248,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateTodoOne"
+              $ref: "#/components/schemas/TodoOne"
         required: true
       responses:
         "200":
@@ -524,7 +524,7 @@ components:
           type: string
           example: 今日は晴れだった。楽しかった。
           description: 'フリーコメント'
-    Todo:
+    Todos:
       type: array
       items:
         required:
