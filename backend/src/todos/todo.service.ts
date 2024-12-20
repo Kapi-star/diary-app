@@ -22,6 +22,7 @@ export class TodoService {
       return await this.todoRepository.save(todo);
   
     }
+
   async getAllTodos(): Promise<TodoEntity[]> {
       return await this.todoRepository.find({
         select: {
@@ -30,6 +31,14 @@ export class TodoService {
             startDate: true,
             timeRequired:true,
             isFinished: true,
+        },
+    })
+  }
+
+  async getTodoOne(id): Promise<TodoEntity[]> {
+      return await this.todoRepository.find({
+        where: {
+            id: id,
         },
     })
   }
