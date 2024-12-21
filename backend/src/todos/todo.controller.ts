@@ -7,8 +7,9 @@ import {
   HttpStatus,
   Param,
   Delete,
+  Patch,
 } from '@nestjs/common';
-import { CreateTodoDTO } from './dto/create-todo.dto';
+import { CreateTodoDTO, UpdateTodoDTO } from './dto/todo.dto';
 import { TodoService } from './todo.service';
 
 @Controller('todo')
@@ -25,15 +26,6 @@ export class TodoController {
         statusCode: HttpStatus.OK,
       };
     } catch (err) {
-      if (err.name === 'ValidationError') {
-        throw new HttpException(
-          {
-            message: 'バリデーションエラー: ' + err.message,
-          },
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-
       throw new HttpException(
         {
           message: 'サーバーエラー: ' + err.message,
@@ -82,6 +74,35 @@ export class TodoController {
         data: todos,
       };
     } catch (err) {
+      throw new HttpException(
+        {
+          message: 'サーバーエラー: ' + err.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  // タスク更新
+  @Patch(':id/update')
+  async updateTodo(@Param('id') id: string, @Body() dto: UpdateTodoDTO): Promise<any> {
+    try {
+      const result = await this.todoService.updateTodo(id, dto);
+
+      if (result.affected === 0) {
+        throw new HttpException(
+          {
+            message: 'Todo not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return {
+        statusCode: HttpStatus.OK,
+      };
+    } catch (err) {
+
       throw new HttpException(
         {
           message: 'サーバーエラー: ' + err.message,

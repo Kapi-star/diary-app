@@ -27,7 +27,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Diary"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -48,14 +48,8 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -84,7 +78,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/DiaryOne"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -114,14 +108,8 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -146,7 +134,7 @@ paths:
         "200":
           description: 成功
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -166,7 +154,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Todos"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -187,14 +175,8 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -223,7 +205,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/TodoOne"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -248,19 +230,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TodoOne"
+              $ref: "#/components/schemas/UpdateTodo"
         required: true
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -285,7 +261,7 @@ paths:
         "200":
           description: 成功
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -305,14 +281,8 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -337,7 +307,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/LoginUserResponse"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -358,14 +328,8 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -389,7 +353,7 @@ paths:
         "200":
           description: 成功
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -583,6 +547,30 @@ components:
           type: string
           format: uuid
           example: "123e4567-e89b-12d3-a456-426614174000"
+        title:
+          type: string
+          example: 朝ごはんを食べる
+        todoDetail:
+          type: string
+          example: りんごとパンを食べる
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2024-10-07T14:30:00'
+          description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
+        timeRequired:
+            type: integer
+            example: 60
+            description: 'タスクの所要時間'
+        isFinished:
+          type: boolean
+          example: false
+    UpdateTodo:
+      required:
+        - title
+        - isFinished
+      type: object
+      properties:
         title:
           type: string
           example: 朝ごはんを食べる
