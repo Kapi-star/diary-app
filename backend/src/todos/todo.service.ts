@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { TodoEntity } from './entities/todo.entity';
 import { CreateTodoDTO } from './dto/create-todo.dto';
 import { v4 as uuidv4 } from 'uuid';
@@ -35,11 +35,15 @@ export class TodoService {
     })
   }
 
-  async getTodoOne(id): Promise<TodoEntity[]> {
-      return await this.todoRepository.find({
+  async getTodoOne(id): Promise<TodoEntity> {
+      return await this.todoRepository.findOne({
         where: {
             id: id,
         },
     })
+  }
+
+  async deleteOne(id: string): Promise<DeleteResult> {
+    return await this.todoRepository.delete({ id });
   }
 }

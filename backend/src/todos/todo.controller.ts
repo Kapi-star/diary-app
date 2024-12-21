@@ -6,6 +6,7 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { CreateTodoDTO } from './dto/create-todo.dto';
 import { TodoService } from './todo.service';
@@ -14,6 +15,7 @@ import { TodoService } from './todo.service';
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
+  // タスク作成
   @Post('create')
   async createTodo(@Body() dto: CreateTodoDTO): Promise<any> {
     try {
@@ -34,13 +36,14 @@ export class TodoController {
 
       throw new HttpException(
         {
-          message: 'その他のサーバー側のエラー: ' + err.message,
+          message: 'サーバーエラー: ' + err.message,
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
 
+  // タスク一覧取得
   @Get()
   async fetchAllTodo(): Promise<any> {
     try {
@@ -52,17 +55,28 @@ export class TodoController {
     } catch (err) {
       throw new HttpException(
         {
-          message: 'その他のサーバー側のエラー: ' + err.message,
+          message: 'サーバーエラー: ' + err.message,
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
 
+  // タスク詳細取得
   @Get(':id')
   async fetchTodoOne(@Param('id') id: string): Promise<any> {
     try {
       const todos = await this.todoService.getTodoOne(id);
+
+      if(todos == null) {
+        throw new HttpException(
+          {
+            message: 'Todo not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
       return {
         statusCode: HttpStatus.OK,
         data: todos,
@@ -70,7 +84,35 @@ export class TodoController {
     } catch (err) {
       throw new HttpException(
         {
-          message: 'その他のサーバー側のエラー: ' + err.message,
+          message: 'サーバーエラー: ' + err.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  // タスク削除
+  @Delete(':id/delete')
+  async deleteTodo(@Param('id') id: string): Promise<any> {
+    try {
+      const result = await this.todoService.deleteOne(id);
+
+      if (result.affected === 0) {
+        throw new HttpException(
+          {
+            message: 'Todo not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return {
+        statusCode: HttpStatus.OK,
+      };
+    } catch (err) {
+      throw new HttpException(
+        {
+          message: 'サーバーエラー: ' + err.message,
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
