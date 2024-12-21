@@ -1,6 +1,7 @@
 import {
   IsBoolean,
   IsDate,
+  IsDateString,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -16,7 +17,7 @@ export class CreateTodoDTO {
   @IsOptional()
   todoDetail: string;
 
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   startDate: Date;
 
@@ -34,7 +35,7 @@ export class UpdateTodoDTO {
   @IsOptional()
   todoDetail: string;
 
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   startDate: Date;
 
