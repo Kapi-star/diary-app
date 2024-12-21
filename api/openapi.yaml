@@ -27,7 +27,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Diary"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -48,14 +48,8 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -84,7 +78,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/DiaryOne"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -114,14 +108,8 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -146,7 +134,7 @@ paths:
         "200":
           description: 成功
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -166,7 +154,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Todos"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -187,14 +175,8 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -223,7 +205,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/TodoOne"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -254,7 +236,7 @@ paths:
         "200":
           description: 成功
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -279,7 +261,7 @@ paths:
         "200":
           description: 成功
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -299,14 +281,8 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -331,7 +307,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/LoginUserResponse"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -352,14 +328,8 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: バリデーションエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:
@@ -383,7 +353,7 @@ paths:
         "200":
           description: 成功
         "500":
-          description: その他のサーバー側のエラー
+          description: サーバーエラー
           content:
             application/json:
               schema:

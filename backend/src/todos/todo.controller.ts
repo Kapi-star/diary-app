@@ -26,15 +26,6 @@ export class TodoController {
         statusCode: HttpStatus.OK,
       };
     } catch (err) {
-      if (err.name === 'ValidationError') {
-        throw new HttpException(
-          {
-            message: 'バリデーションエラー: ' + err.message,
-          },
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-
       throw new HttpException(
         {
           message: 'サーバーエラー: ' + err.message,
