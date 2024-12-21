@@ -41,8 +41,26 @@ export class TodoController {
     }
   }
 
+  @Get()
+  async fetchAllTodo(): Promise<any> {
+    try {
+      const todos = await this.todoService.getAllTodos();
+      return {
+        statusCode: HttpStatus.OK,
+        data: todos,
+      };
+    } catch (err) {
+      throw new HttpException(
+        {
+          message: 'その他のサーバー側のエラー: ' + err.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Get(':id')
-  async fetchAllTodo(@Param('id') id: string): Promise<any> {
+  async fetchTodoOne(@Param('id') id: string): Promise<any> {
     try {
       const todos = await this.todoService.getTodoOne(id);
       return {
