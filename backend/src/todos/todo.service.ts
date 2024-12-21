@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { TodoEntity } from './entities/todo.entity';
-import { CreateTodoDTO } from './dto/create-todo.dto';
+import { CreateTodoDTO, UpdateTodoDTO } from './dto/todo.dto';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
@@ -41,6 +41,10 @@ export class TodoService {
             id: id,
         },
     })
+  }
+
+  async updateTodo(id, dto: UpdateTodoDTO): Promise<UpdateResult> {
+      return await this.todoRepository.update(id, dto);
   }
 
   async deleteOne(id: string): Promise<DeleteResult> {
