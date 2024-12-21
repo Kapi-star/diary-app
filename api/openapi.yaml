@@ -372,17 +372,17 @@ components:
           StartTime:
             type: string
             format: 'date-time'
-            example: '2024-10-07T14:30:00'
+            example: '2024-10-07T14:30:00Z'
             description: '予定のの開始日時 (年-月-日T時:分:秒形式)'
           EndTime:
             type: string
             format: 'date-time'
-            example: '2024-10-07T15:30:00'
+            example: '2024-10-07T15:30:00Z'
             description: '予定のの終了日時 (年-月-日T時:分:秒形式)'
           todo:
             type: string
             example: 仕事
-    Diary:
+    Diarys:
       type: array
       items:
         required:
@@ -398,6 +398,7 @@ components:
           date:
             type: string
             format: date
+            example: "2024-10-07T15:30:00Z"
           title:
             type: string
             example: 1日個人開発
@@ -410,10 +411,11 @@ components:
         date:
           type: string
           format: date
+          example: "2024-10-07T15:30:00Z"
         title:
           type: string
           example: 1日個人開発
-        todoId:
+        todo:
           type: array
           items:
             type: string
@@ -437,7 +439,7 @@ components:
           items:
             type: string
             example: 時間通り行動するために時計を見る
-        freeComent:
+        freeComment:
           type: string
           example: 今日は晴れだった。楽しかった。
     DiaryOne:
@@ -454,10 +456,11 @@ components:
         date:
           type: string
           format: date
+          example: "2024-10-07T15:30:00Z"
         title:
           type: string
           example: 1日個人開発
-        todoId:
+        todo:
           type: array
           items:
             type: string
@@ -484,7 +487,7 @@ components:
             type: string
             example: 時間通り行動するために時計を見る
             description: '改善点'
-        freeComent:
+        freeComment:
           type: string
           example: 今日は晴れだった。楽しかった。
           description: 'フリーコメント'
@@ -507,7 +510,7 @@ components:
           startDate:
             type: string
             format: 'date-time'
-            example: '2024-10-07T14:30:00'
+            example: '2024-10-07T15:30:00Z'
             description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
           timeRequired:
             type: integer
@@ -530,7 +533,7 @@ components:
         startDate:
           type: string
           format: 'date-time'
-          example: '2024-10-07T14:30:00'
+          example: '2024-10-07T15:30:00Z'
           description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
         timeRequired:
             type: integer
@@ -556,7 +559,7 @@ components:
         startDate:
           type: string
           format: 'date-time'
-          example: '2024-10-07T14:30:00'
+          example: '2024-10-07T15:30:00Z'
           description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
         timeRequired:
             type: integer
@@ -580,7 +583,7 @@ components:
         startDate:
           type: string
           format: 'date-time'
-          example: '2024-10-07T14:30:00'
+          example: '2024-10-07T15:30:00Z'
           description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
         timeRequired:
             type: integer

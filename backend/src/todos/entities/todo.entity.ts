@@ -15,7 +15,7 @@ export class TodoEntity {
   @Column('text',  {comment: '内容', nullable: true })
   todoDetail?: string;
 
-  @Column('date', { comment: '始める日', nullable: true })
+  @Column('timestamp', { comment: '始める日', nullable: true })
   startDate?: Date;
 
   @Column('integer', { comment: 'かける時間（分）', nullable: true })
