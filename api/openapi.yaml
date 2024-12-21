@@ -382,7 +382,7 @@ components:
           todo:
             type: string
             example: 仕事
-    Diary:
+    Diarys:
       type: array
       items:
         required:
@@ -413,7 +413,7 @@ components:
         title:
           type: string
           example: 1日個人開発
-        todoId:
+        todo:
           type: array
           items:
             type: string
@@ -437,7 +437,7 @@ components:
           items:
             type: string
             example: 時間通り行動するために時計を見る
-        freeComent:
+        freeComment:
           type: string
           example: 今日は晴れだった。楽しかった。
     DiaryOne:
@@ -457,7 +457,7 @@ components:
         title:
           type: string
           example: 1日個人開発
-        todoId:
+        todo:
           type: array
           items:
             type: string
@@ -484,7 +484,7 @@ components:
             type: string
             example: 時間通り行動するために時計を見る
             description: '改善点'
-        freeComent:
+        freeComment:
           type: string
           example: 今日は晴れだった。楽しかった。
           description: 'フリーコメント'

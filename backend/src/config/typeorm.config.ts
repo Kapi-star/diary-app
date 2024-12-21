@@ -11,7 +11,10 @@ export const typeormConfig: TypeOrmModuleOptions = {
   database: process.env.DB_NAME,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  entities: [join(__dirname, '../../dist/todos/entities/todo.entity.js')],
+  entities: [
+    join(__dirname, '../../dist/todos/entities/todo.entity.js'),
+    join(__dirname, '../../dist/diarys/entities/diary.entity.js')
+  ],
   synchronize: true,
   logging: false,
 };
