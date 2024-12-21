@@ -1,9 +1,7 @@
 import {
   IsArray,
-  IsBoolean,
-  IsDate,
+  IsDateString,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
@@ -15,7 +13,7 @@ export class TimeScheduleDTO {
 }
 
 export class CreateDiaryDTO {
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
   date: Date;
 
@@ -83,5 +81,5 @@ export class UpdateDiaryDTO {
 
   @IsString()
   @IsOptional()
-  freeComent: string;
+  freeComment: string;
 }
