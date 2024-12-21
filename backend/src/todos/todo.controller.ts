@@ -68,6 +68,15 @@ export class TodoController {
     try {
       const todos = await this.todoService.getTodoOne(id);
 
+      if(todos == null) {
+        throw new HttpException(
+          {
+            message: 'Todo not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
       return {
         statusCode: HttpStatus.OK,
         data: todos,

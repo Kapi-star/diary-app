@@ -35,8 +35,8 @@ export class TodoService {
     })
   }
 
-  async getTodoOne(id): Promise<TodoEntity[]> {
-      return await this.todoRepository.find({
+  async getTodoOne(id): Promise<TodoEntity> {
+      return await this.todoRepository.findOne({
         where: {
             id: id,
         },
