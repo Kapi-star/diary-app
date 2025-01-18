@@ -31,7 +31,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
   /diary/create:
     post:
       tags:
@@ -48,12 +48,16 @@ paths:
       responses:
         "200":
           description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
         "500":
           description: サーバーエラー
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
   /diary/{diaryId}:
     get:
       tags:
@@ -82,8 +86,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-  /diary/{diaryId}/update:
+                $ref: "#/components/schemas/Response"
+  /diary/update/{diaryId}:
     patch:
       tags:
         - diary
@@ -108,13 +112,17 @@ paths:
       responses:
         "200":
           description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
         "500":
           description: サーバーエラー
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-  /diary/{diaryId}/delete:
+                $ref: "#/components/schemas/Response"
+  /diary/delete/{diaryId}:
     delete:
       tags:
         - diary
@@ -133,12 +141,16 @@ paths:
       responses:
         "200":
           description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
         "500":
           description: サーバーエラー
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
   /todo:
     get:
       tags:
@@ -158,7 +170,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
   /todo/create:
     post:
       tags:
@@ -175,12 +187,16 @@ paths:
       responses:
         "200":
           description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
         "500":
           description: サーバーエラー
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
   /todo/{todoId}:
     get:
       tags:
@@ -209,7 +225,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
   /todo/{todoId}/update:
     patch:
       tags:
@@ -235,12 +251,16 @@ paths:
       responses:
         "200":
           description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
         "500":
           description: サーバーエラー
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
   /todo/{todoId}/delete:
     delete:
       tags:
@@ -260,34 +280,17 @@ paths:
       responses:
         "200":
           description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
         "500":
           description: サーバーエラー
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-  /user/create:
-    post:
-      tags:
-        - user
-      summary: ユーザー作成
-      description: ユーザーを新規作成します
-      operationId: createUser
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User"
-      responses:
-        "200":
-          description: 成功
-        "500":
-          description: サーバーエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /user/login:
+                $ref: "#/components/schemas/Response"
+  /auth/login:
     post:
       tags:
         - user
@@ -306,19 +309,58 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/LoginUserResponse"
+        "401":
+          description: パスワードが間違っています
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
         "500":
           description: サーバーエラー
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
+  /user/create:
+    post:
+      tags:
+        - user
+      summary: ユーザー作成
+      description: ユーザーを新規作成します
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUser"
+      responses:
+        "201":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+        "409":
+          description: メールアドレスがすでに登録されています
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
   /user/update:
-    patch:
+    put:
       tags:
         - user
       summary: ユーザー更新
       description: idに合致するユーザーを一件更新します
       operationId: updateUser
+      security:
+        - Bearer: []
       requestBody:
         content:
           application/json:
@@ -328,12 +370,28 @@ paths:
       responses:
         "200":
           description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+        "401":
+          description: 認証されませんでした
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedResponse"
+        "404":
+          description: ユーザーが見つかりません
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
         "500":
           description: サーバーエラー
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
   /user/delete:
     delete:
       tags:
@@ -341,24 +399,39 @@ paths:
       summary: ユーザー削除
       description: idに合致するユーザーを一件削除します
       operationId: deleteUser
-      parameters:
-        - in: header
-          name: UserId
-          schema:
-            type: string
-            format: uuid
-            example: "123e4567-e89b-12d3-a456-426614174000"
-          required: true
+      security:
+        - Bearer: []
       responses:
         "200":
           description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+        "401":
+          description: 認証されませんでした
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedResponse"
+        "404":
+          description: ユーザーが見つかりません
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
         "500":
           description: サーバーエラー
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
 components:
+  securitySchemes:
+      Bearer:
+        type: http
+        scheme: bearer
+        description: Credentials or access token for API
   schemas:
     timeSchedule:
       type: array
@@ -592,7 +665,7 @@ components:
         isFinished:
           type: boolean
           example: false
-    User:
+    CreateUser:
       required:
         - username
         - email
@@ -622,34 +695,32 @@ components:
           example: "12345abcde"
     LoginUserResponse:
       required:
-        - ispassed
+        - token
+        - user
       type: object
       properties:
-        ispassed:
-          type: boolean
-          example: true
-        userId:
+        token:
           type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-        username:
-          type: string
-          example: かぴ
-        email:
-          type: string
-          example: Kapi@email.com
+          example: "aaaaa"
+        user:
+          type: object
+          required:
+            - username
+            - useremail
+          properties:
+            username:
+              type: string
+              example: "maki"
+            useremail:
+              type: string
+              example: "b@b"
     UpdateUser:
       required:
-        - userid
         - username
         - email
         - password
       type: object
       properties:
-        userid:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
         username:
           type: string
           example: かぴ
@@ -659,9 +730,23 @@ components:
         password:
           type: string
           example:  "12345abcde"
-    Error:
+    Response:
+      type: object
+      properties:
+        message:
+          type: string
+          description: メッセージ
+        statuscode:
+          type: integer
+          description: ステータスコード
+    UnauthorizedResponse:
       type: object
       properties:
         message:
           type: string
           description: エラーメッセージ
+          example: "Unauthorized"
+        statusCode:
+          type: integer
+          description: HTTP ステータスコード
+          example: 401
