@@ -12,39 +12,49 @@ export class DiaryService {
     private readonly diaryRepository: Repository<DiaryEntity>,
   ) {}
 
-  async createDiary(dto: CreateDiaryDTO): Promise<DiaryEntity> {
+  async createDiary(
+    dto: CreateDiaryDTO,
+    userId: string,
+  ): Promise<DiaryEntity> {
       const Diary = this.diaryRepository.create({
         ...dto,
         id: uuidv4(),
+        userId: userId,
       });
 
       return await this.diaryRepository.save(Diary);
   
     }
 
-  async getAllDiarys(): Promise<DiaryEntity[]> {
+  async getAllDiarys(
+    userId: string,
+  ): Promise<DiaryEntity[]> {
       return await this.diaryRepository.find({
         select: {
             id: true,
             date: true,
             title: true,
         },
-    })
-  }
-
-  async getDiaryOne(id): Promise<DiaryEntity> {
-      return await this.diaryRepository.findOne({
         where: {
-            id: id,
+          userId: userId,
         },
     })
   }
 
-  async updateDiary(id, dto: UpdateDiaryDTO): Promise<UpdateResult> {
-      return await this.diaryRepository.update(id, dto);
+  async getDiaryOne(diaryId, userId): Promise<DiaryEntity> {
+      return await this.diaryRepository.findOne({
+        where: {
+            id: diaryId,
+            userId: userId,
+        },
+    })
   }
 
-  async deleteOne(id: string): Promise<DeleteResult> {
-    return await this.diaryRepository.delete({ id });
+  async updateDiary(userId, diaryId, dto: UpdateDiaryDTO): Promise<UpdateResult> {
+    return await this.diaryRepository.update({ id: diaryId, userId: userId }, dto);
+  }
+
+  async deleteOne(userId: string, diaryId: string): Promise<DeleteResult> {
+    return await this.diaryRepository.delete({ id: diaryId, userId: userId});
   }
 }

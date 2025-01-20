@@ -19,13 +19,15 @@ paths:
       summary: 日記全件取得
       description: 日記内容の一部を全件取得します
       operationId: getDiary
+      security:
+        - Bearer: []
       responses:
         "200":
           description: 成功
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Diary"
+                $ref: "#/components/schemas/Diarys"
         "500":
           description: サーバーエラー
           content:
@@ -39,6 +41,8 @@ paths:
       summary: 日記作成
       description: 日記を新規作成します
       operationId: createDiary
+      security:
+        - Bearer: []
       requestBody:
         content:
           application/json:
@@ -46,7 +50,7 @@ paths:
               $ref: "#/components/schemas/CreateDiaryOne"
         required: true
       responses:
-        "200":
+        "201":
           description: 成功
           content:
             application/json:
@@ -58,16 +62,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Response"
-  /diary/{diaryId}:
+  /diary/getOne:
     get:
       tags:
         - diary
       summary: 日記一件取得
       description: idに合致する日記を一件取得します
       operationId: getDiaryById
+      security:
+        - Bearer: []
       parameters:
         - name: "diaryId"
-          in: "path"
+          in: query
           description: 取得したい日記のID
           required: true
           schema:
@@ -87,16 +93,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Response"
-  /diary/update/{diaryId}:
-    patch:
+  /diary/update:
+    put:
       tags:
         - diary
       summary: 日記更新
       description: idに合致する日記を一件更新します
       operationId: updateDiary
+      security:
+        - Bearer: []
       parameters:
         - name: "diaryId"
-          in: "path"
+          in: query
           description: 更新したい日記のID
           required: true
           schema:
@@ -122,16 +130,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Response"
-  /diary/delete/{diaryId}:
+  /diary/delete:
     delete:
       tags:
         - diary
       summary: 日記削除
       description: idに合致する日記を一件削除します
       operationId: deleteDiary
+      security:
+        - Bearer: []
       parameters:
         - name: "diaryId"
-          in: "path"
+          in: query
           description: 更新したい日記のID
           required: true
           schema:
@@ -158,6 +168,8 @@ paths:
       summary: タスク一覧取得
       description: タスク内容の一部を全件取得します
       operationId: getTodo
+      security:
+        - Bearer: []
       responses:
         "200":
           description: 成功
@@ -178,6 +190,8 @@ paths:
       summary: タスク作成
       description: タスクを新規作成します
       operationId: createTodo
+      security:
+        - Bearer: []
       requestBody:
         content:
           application/json:
@@ -185,7 +199,7 @@ paths:
               $ref: "#/components/schemas/CreateTodoOne"
         required: true
       responses:
-        "200":
+        "201":
           description: 成功
           content:
             application/json:
@@ -197,16 +211,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Response"
-  /todo/{todoId}:
+  /todo/getOne:
     get:
       tags:
         - todo
       summary: タスク詳細取得
       description: idに合致するタスクを一件取得します
       operationId: getTodoById
+      security:
+        - Bearer: []
       parameters:
         - name: "todoId"
-          in: "path"
+          in: query
           description: 取得したいタスクのID
           required: true
           schema:
@@ -226,16 +242,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Response"
-  /todo/{todoId}/update:
-    patch:
+  /todo/update:
+    put:
       tags:
         - todo
       summary: タスク更新
       description: idに合致するタスクを一件更新します
       operationId: updateTodo
+      security:
+        - Bearer: []
       parameters:
         - name: "todoId"
-          in: "path"
+          in: query
           description: 更新したいタスクのID
           required: true
           schema:
@@ -261,16 +279,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Response"
-  /todo/{todoId}/delete:
+  /todo/delete:
     delete:
       tags:
         - todo
       summary: タスク削除
       description: idに合致するタスクを一件削除します
       operationId: deleteTodo
+      security:
+        - Bearer: []
       parameters:
         - name: "todoId"
-          in: "path"
+          in: query
           description: 更新したいタスクのID
           required: true
           schema:
@@ -456,25 +476,32 @@ components:
             type: string
             example: 仕事
     Diarys:
-      type: array
-      items:
-        required:
-          - id
-          - date
-          - title
-        type: object
-        properties:
-          id:
-            type: string
-            format: uuid
-            example: "123e4567-e89b-12d3-a456-426614174000"
-          date:
-            type: string
-            format: date
-            example: "2024-10-07T15:30:00Z"
-          title:
-            type: string
-            example: 1日個人開発
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: ステータスコード
+          example: 200
+        data:
+          type: array
+          items:
+            type: object
+            required:
+              - id
+              - date
+              - title
+            properties:
+              id:
+                type: string
+                format: uuid
+                example: "123e4567-e89b-12d3-a456-426614174000"
+              date:
+                type: string
+                format: date-time
+                example: "2024-10-07T15:30:00Z"
+              title:
+                type: string
+                example: "1日個人開発"
     CreateDiaryOne:
       required:
         - date
@@ -516,82 +543,85 @@ components:
           type: string
           example: 今日は晴れだった。楽しかった。
     DiaryOne:
-      required:
-        - id
-        - date
-        - title
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-        date:
-          type: string
-          format: date
-          example: "2024-10-07T15:30:00Z"
-        title:
-          type: string
-          example: 1日個人開発
-        todo:
-          type: array
-          items:
-            type: string
-            format: uuid
-        timeSchedule:
-          $ref: "#/components/schemas/timeSchedule"
-        timeScheduleResult:
-          $ref: "#/components/schemas/timeSchedule"
-        pros:
-          type: array
-          items:
-            type: string
-            example: 時間通り行動できた
-            description: '良かったところ'
-        cons:
-          type: array
-          items:
-            type: string
-            example: 時間通り行動できなかった
-            description: '良くなかったところ'
-        improvements:
-          type: array
-          items:
-            type: string
-            example: 時間通り行動するために時計を見る
-            description: '改善点'
-        freeComment:
-          type: string
-          example: 今日は晴れだった。楽しかった。
-          description: 'フリーコメント'
+        statusCode:
+          type: integer
+          description: ステータスコード
+          example: 200
+        data:
+          type: object
+          required:
+            - id
+            - date
+            - title
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: "123e4567-e89b-12d3-a456-426614174000"
+            date:
+              type: string
+              format: date-time
+              example: "2024-10-07T15:30:00Z"
+            title:
+              type: string
+              example: "1日個人開発"
+            todo:
+              type: array
+              items:
+                type: string
+                format: uuid
+            timeSchedule:
+              $ref: "#/components/schemas/timeSchedule"
+            timeScheduleResult:
+              $ref: "#/components/schemas/timeSchedule"
+            pros:
+              type: array
+              items:
+                type: string
+                example: "時間通り行動できた"
+                description: "良かったところ"
+            cons:
+              type: array
+              items:
+                type: string
+                example: "時間通り行動できなかった"
     Todos:
-      type: array
-      items:
-        required:
-          - id
-          - title
-          - isFinished
-        type: object
-        properties:
-          id:
-            type: string
-            format: uuid
-            example: "123e4567-e89b-12d3-a456-426614174000"
-          title:
-            type: string
-            example: 朝ごはんを食べる
-          startDate:
-            type: string
-            format: 'date-time'
-            example: '2024-10-07T15:30:00Z'
-            description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
-          timeRequired:
-            type: integer
-            example: 60
-            description: 'タスクの所要時間'
-          isFinished:
-            type: boolean
-            example: false
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: ステータスコード
+          example: 200
+        data:
+          type: array
+          items:
+            required:
+              - id
+              - title
+              - isFinished
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                example: "123e4567-e89b-12d3-a456-426614174000"
+              title:
+                type: string
+                example: 朝ごはんを食べる
+              startDate:
+                type: string
+                format: 'date-time'
+                example: '2024-10-07T15:30:00Z'
+                description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
+              timeRequired:
+                type: integer
+                example: 60
+                description: 'タスクの所要時間'
+              isFinished:
+                type: boolean
+                example: false
     CreateTodoOne:
       required:
         - title
@@ -613,34 +643,41 @@ components:
             example: 60
             description: 'タスクの所要時間'
     TodoOne:
-      required:
-        - id
-        - title
-        - isFinished
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-        title:
-          type: string
-          example: 朝ごはんを食べる
-        todoDetail:
-          type: string
-          example: りんごとパンを食べる
-        startDate:
-          type: string
-          format: 'date-time'
-          example: '2024-10-07T15:30:00Z'
-          description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
-        timeRequired:
-            type: integer
-            example: 60
-            description: 'タスクの所要時間'
-        isFinished:
-          type: boolean
-          example: false
+        statusCode:
+          type: integer
+          description: ステータスコード
+          example: 200
+        data:
+          type: object
+          required:
+            - id
+            - title
+            - isFinished
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: "123e4567-e89b-12d3-a456-426614174000"
+            title:
+              type: string
+              example: 朝ごはんを食べる
+            todoDetail:
+              type: string
+              example: りんごとパンを食べる
+            startDate:
+              type: string
+              format: 'date-time'
+              example: '2024-10-07T15:30:00Z'
+              description: 'タスクの開始日時 (年-月-日T時:分:秒形式)'
+            timeRequired:
+                type: integer
+                example: 60
+                description: 'タスクの所要時間'
+            isFinished:
+              type: boolean
+              example: false
     UpdateTodo:
       required:
         - title

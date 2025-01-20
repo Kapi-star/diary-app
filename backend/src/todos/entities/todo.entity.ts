@@ -9,7 +9,10 @@ export class TodoEntity {
   @PrimaryGeneratedColumn('uuid') 
   id: string;
 
-  @Column('varchar',  {length: 30, comment: 'タイトル' })
+  @Column('uuid', {comment: 'ユーザーID', nullable: false })
+  userId: string;
+
+  @Column('varchar',  {length: 30, comment: 'タイトル', nullable: false })
   title: string;
 
   @Column('text',  {comment: '内容', nullable: true })

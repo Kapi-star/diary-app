@@ -5,25 +5,30 @@ import {
   Get,
   HttpException,
   HttpStatus,
-  Param,
   Delete,
-  Patch,
+  UseGuards,
+  Request,
+  Put,
+  Query,
 } from '@nestjs/common';
 import { CreateDiaryDTO, UpdateDiaryDTO } from './dto/diary.dto';
 import { DiaryService } from './diary.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('Diary')
 export class DiaryController {
   constructor(private readonly DiaryService: DiaryService) {}
 
   // タスク作成
-  @Post('create')
-  async createDiary(@Body() dto: CreateDiaryDTO): Promise<any> {
+  @UseGuards(AuthGuard)
+  @Post('/create')
+  async createDiary(@Request() req, @Body() dto: CreateDiaryDTO): Promise<any> {
     try {
-      await this.DiaryService.createDiary(dto);
+      await this.DiaryService.createDiary(dto, req.user.sub);
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.CREATED
       };
     } catch (err) {
       throw new HttpException(
@@ -36,10 +41,11 @@ export class DiaryController {
   }
 
   // タスク一覧取得
+  @UseGuards(AuthGuard)
   @Get()
-  async fetchAllDiary(): Promise<any> {
+  async fetchAllDiary(@Request() req): Promise<any> {
     try {
-      const Diarys = await this.DiaryService.getAllDiarys();
+      const Diarys = await this.DiaryService.getAllDiarys(req.user.sub);
       return {
         statusCode: HttpStatus.OK,
         data: Diarys,
@@ -55,10 +61,11 @@ export class DiaryController {
   }
 
   // タスク詳細取得
-  @Get(':id')
-  async fetchDiaryOne(@Param('id') id: string): Promise<any> {
+  @UseGuards(AuthGuard)
+  @Get('/getone')
+  async fetchDiaryOne(@Request() req, @Query('diaryId') diaryId: string): Promise<any> {
     try {
-      const Diarys = await this.DiaryService.getDiaryOne(id);
+      const Diarys = await this.DiaryService.getDiaryOne(diaryId, req.user.sub);
 
       if(Diarys == null) {
         throw new HttpException(
@@ -84,10 +91,11 @@ export class DiaryController {
   }
 
   // タスク更新
-  @Patch(':id/update')
-  async updateDiary(@Param('id') id: string, @Body() dto: UpdateDiaryDTO): Promise<any> {
+  @UseGuards(AuthGuard)
+  @Put('/update')
+  async updateDiary(@Request() req,  @Query('diaryId') diaryId: string, @Body() dto: UpdateDiaryDTO): Promise<any> {
     try {
-      const result = await this.DiaryService.updateDiary(id, dto);
+      const result = await this.DiaryService.updateDiary(req.user.sub, diaryId, dto);
 
       if (result.affected === 0) {
         throw new HttpException(
@@ -99,7 +107,8 @@ export class DiaryController {
       }
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.OK
       };
     } catch (err) {
 
@@ -113,10 +122,11 @@ export class DiaryController {
   }
 
   // タスク削除
-  @Delete(':id/delete')
-  async deleteDiary(@Param('id') id: string): Promise<any> {
+  @UseGuards(AuthGuard)
+  @Delete('/delete')
+  async deleteDiary(@Request() req, @Query('diaryId') diaryId: string): Promise<any> {
     try {
-      const result = await this.DiaryService.deleteOne(id);
+      const result = await this.DiaryService.deleteOne(req.user.sub, diaryId);
 
       if (result.affected === 0) {
         throw new HttpException(
@@ -128,7 +138,8 @@ export class DiaryController {
       }
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.OK
       };
     } catch (err) {
       throw new HttpException(

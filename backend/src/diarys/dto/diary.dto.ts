@@ -51,6 +51,10 @@ export class CreateDiaryDTO {
 }
 
 export class UpdateDiaryDTO {
+  @IsDateString()
+  @IsNotEmpty()
+  date: Date;
+
   @IsString()
   @IsNotEmpty()
   title: string;

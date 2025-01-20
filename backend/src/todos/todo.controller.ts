@@ -5,25 +5,30 @@ import {
   Get,
   HttpException,
   HttpStatus,
-  Param,
   Delete,
-  Patch,
+  Put,
+  UseGuards,
+  Request,
+  Query,
 } from '@nestjs/common';
 import { CreateTodoDTO, UpdateTodoDTO } from './dto/todo.dto';
 import { TodoService } from './todo.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('todo')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
   // タスク作成
-  @Post('create')
-  async createTodo(@Body() dto: CreateTodoDTO): Promise<any> {
+  @UseGuards(AuthGuard)
+  @Post('/create')
+  async createTodo(@Request() req, @Body() dto: CreateTodoDTO): Promise<any> {
     try {
-      await this.todoService.createTodo(dto);
+      await this.todoService.createTodo(req.user.sub, dto);
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.CREATED
       };
     } catch (err) {
       throw new HttpException(
@@ -36,10 +41,11 @@ export class TodoController {
   }
 
   // タスク一覧取得
+  @UseGuards(AuthGuard)
   @Get()
-  async fetchAllTodo(): Promise<any> {
+  async fetchAllTodo(@Request() req): Promise<any> {
     try {
-      const todos = await this.todoService.getAllTodos();
+      const todos = await this.todoService.getAllTodos(req.user.sub);
       return {
         statusCode: HttpStatus.OK,
         data: todos,
@@ -55,10 +61,11 @@ export class TodoController {
   }
 
   // タスク詳細取得
-  @Get(':id')
-  async fetchTodoOne(@Param('id') id: string): Promise<any> {
+  @UseGuards(AuthGuard)
+  @Get('/getOne')
+  async fetchTodoOne(@Request() req, @Query('todoId') todoId: string): Promise<any> {
     try {
-      const todos = await this.todoService.getTodoOne(id);
+      const todos = await this.todoService.getTodoOne(req.user.sub, todoId);
 
       if(todos == null) {
         throw new HttpException(
@@ -84,10 +91,11 @@ export class TodoController {
   }
 
   // タスク更新
-  @Patch(':id/update')
-  async updateTodo(@Param('id') id: string, @Body() dto: UpdateTodoDTO): Promise<any> {
+  @UseGuards(AuthGuard)
+  @Put('/update')
+  async updateTodo(@Request() req, @Query('todoId') todoId: string, @Body() dto: UpdateTodoDTO): Promise<any> {
     try {
-      const result = await this.todoService.updateTodo(id, dto);
+      const result = await this.todoService.updateTodo(req.user.sub, todoId, dto);
 
       if (result.affected === 0) {
         throw new HttpException(
@@ -99,7 +107,8 @@ export class TodoController {
       }
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.OK
       };
     } catch (err) {
 
@@ -113,10 +122,11 @@ export class TodoController {
   }
 
   // タスク削除
-  @Delete(':id/delete')
-  async deleteTodo(@Param('id') id: string): Promise<any> {
+  @UseGuards(AuthGuard)
+  @Delete('/delete')
+  async deleteTodo(@Request() req, @Query('todoId') todoId: string): Promise<any> {
     try {
-      const result = await this.todoService.deleteOne(id);
+      const result = await this.todoService.deleteOne(req.user.sub, todoId);
 
       if (result.affected === 0) {
         throw new HttpException(
@@ -128,7 +138,8 @@ export class TodoController {
       }
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.OK
       };
     } catch (err) {
       throw new HttpException(
