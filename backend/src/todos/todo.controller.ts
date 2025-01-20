@@ -27,7 +27,8 @@ export class TodoController {
       await this.todoService.createTodo(req.user.sub, dto);
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.CREATED
       };
     } catch (err) {
       throw new HttpException(
@@ -92,9 +93,9 @@ export class TodoController {
   // タスク更新
   @UseGuards(AuthGuard)
   @Put('/update')
-  async updateTodo(@Request() req, @Body() body: { dto: UpdateTodoDTO; todoId: string }): Promise<any> {
+  async updateTodo(@Request() req, @Query('todoId') todoId: string, @Body() dto: UpdateTodoDTO): Promise<any> {
     try {
-      const result = await this.todoService.updateTodo(req.user.sub, body.todoId, body.dto);
+      const result = await this.todoService.updateTodo(req.user.sub, todoId, dto);
 
       if (result.affected === 0) {
         throw new HttpException(
@@ -106,7 +107,8 @@ export class TodoController {
       }
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.OK
       };
     } catch (err) {
 
@@ -136,7 +138,8 @@ export class TodoController {
       }
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.OK
       };
     } catch (err) {
       throw new HttpException(

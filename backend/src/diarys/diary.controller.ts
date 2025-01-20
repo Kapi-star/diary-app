@@ -27,7 +27,8 @@ export class DiaryController {
       await this.DiaryService.createDiary(dto, req.user.sub);
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.CREATED
       };
     } catch (err) {
       throw new HttpException(
@@ -92,9 +93,9 @@ export class DiaryController {
   // タスク更新
   @UseGuards(AuthGuard)
   @Put('/update')
-  async updateDiary(@Request() req, @Body() body: { dto: UpdateDiaryDTO; diaryId: string }): Promise<any> {
+  async updateDiary(@Request() req,  @Query('diaryId') diaryId: string, @Body() dto: UpdateDiaryDTO): Promise<any> {
     try {
-      const result = await this.DiaryService.updateDiary(req.user.sub, body.diaryId, body.dto);
+      const result = await this.DiaryService.updateDiary(req.user.sub, diaryId, dto);
 
       if (result.affected === 0) {
         throw new HttpException(
@@ -106,7 +107,8 @@ export class DiaryController {
       }
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.OK
       };
     } catch (err) {
 
@@ -136,7 +138,8 @@ export class DiaryController {
       }
 
       return {
-        statusCode: HttpStatus.OK,
+        message: `成功`,
+        statusCode: HttpStatus.OK
       };
     } catch (err) {
       throw new HttpException(
