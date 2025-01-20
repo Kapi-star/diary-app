@@ -12,18 +12,19 @@ export class TodoService {
     private readonly todoRepository: Repository<TodoEntity>,
   ) {}
 
-  async createTodo(dto: CreateTodoDTO): Promise<TodoEntity> {
+  async createTodo(userId, dto: CreateTodoDTO): Promise<TodoEntity> {
       const todo = this.todoRepository.create({
         ...dto,
         id: uuidv4(),
         isFinished: false,
+        userId: userId,
       });
 
       return await this.todoRepository.save(todo);
   
     }
 
-  async getAllTodos(): Promise<TodoEntity[]> {
+  async getAllTodos(userId: string): Promise<TodoEntity[]> {
       return await this.todoRepository.find({
         select: {
             id: true,
@@ -32,22 +33,26 @@ export class TodoService {
             timeRequired:true,
             isFinished: true,
         },
-    })
-  }
-
-  async getTodoOne(id): Promise<TodoEntity> {
-      return await this.todoRepository.findOne({
         where: {
-            id: id,
+          userId: userId,
         },
     })
   }
 
-  async updateTodo(id, dto: UpdateTodoDTO): Promise<UpdateResult> {
-      return await this.todoRepository.update(id, dto);
+  async getTodoOne(userId: string, todoId: string): Promise<TodoEntity> {
+      return await this.todoRepository.findOne({
+        where: {
+            id: todoId,
+            userId: userId,
+        },
+    })
   }
 
-  async deleteOne(id: string): Promise<DeleteResult> {
-    return await this.todoRepository.delete({ id });
+  async updateTodo(userId, todoId, dto: UpdateTodoDTO): Promise<UpdateResult> {
+      return await this.todoRepository.update({ id: todoId, userId: userId }, dto);
+  }
+
+  async deleteOne(userId: string, todoId: string): Promise<DeleteResult> {
+    return await this.todoRepository.delete({ id: todoId, userId: userId });
   }
 }
