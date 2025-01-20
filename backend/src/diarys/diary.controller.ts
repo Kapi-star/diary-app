@@ -41,7 +41,7 @@ export class DiaryController {
 
   // タスク一覧取得
   @UseGuards(AuthGuard)
-  @Get('/getall')
+  @Get()
   async fetchAllDiary(@Request() req): Promise<any> {
     try {
       const Diarys = await this.DiaryService.getAllDiarys(req.user.sub);
