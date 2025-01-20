@@ -8,7 +8,10 @@ import { TimeScheduleDTO } from '../dto/diary.dto';
 @Entity('diary')
 export class DiaryEntity {
   @PrimaryGeneratedColumn('uuid') 
-  id: string;
+  id: string
+
+  @Column('uuid', { comment: 'ユーザーID' })
+  userId: string;
 
   @Column('timestamp', { comment: '始める日' })
   date: Date;
