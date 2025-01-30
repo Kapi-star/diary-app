@@ -1,21 +1,24 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 import * as dotenv from "dotenv";
+import { TodoEntity } from 'src/todos/entities/todo.entity';
+import { DiaryEntity } from 'src/diarys/entities/diary.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 dotenv.config();
 
 export const typeormConfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: process.env.DB_HOST,
+  host: 'db',
   port: parseInt(process.env.CONTAINER_DBPORT),
   database: process.env.DB_NAME,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   entities: [
-    join(__dirname, '../../dist/todos/entities/todo.entity.js'),
-    join(__dirname, '../../dist/diarys/entities/diary.entity.js'),
-    join(__dirname, '../../dist/users/entities/user.entity.js')
+    TodoEntity,
+    DiaryEntity,
+    UserEntity
   ],
-  synchronize: true,
+  synchronize: false,
   logging: false,
 };
