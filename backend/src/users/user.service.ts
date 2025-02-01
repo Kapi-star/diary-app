@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, QueryFailedError, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Repository, } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { CreateUserDTO, UpdateUserDTO } from './dto/user.dto';
 import { v4 as uuidv4 } from 'uuid';

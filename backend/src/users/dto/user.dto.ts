@@ -1,10 +1,6 @@
 import {
-  IsArray,
-  IsDateString,
   IsNotEmpty,
-  IsOptional,
   IsString,
-  IsUUID,
 } from 'class-validator';
 
 export class CreateUserDTO {
