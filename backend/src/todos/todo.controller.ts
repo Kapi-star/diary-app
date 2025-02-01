@@ -90,6 +90,29 @@ export class TodoController {
     }
   }
 
+  // 日付からタスク一覧取得
+  @UseGuards(AuthGuard)
+  @Get('/byDate')
+  async fetchTodoByDate(
+    @Request() req,
+    @Query('date') date: string
+  ): Promise<any> {
+    try {
+      const todos = await this.todoService.fetchTodoByDate(req.user.sub, date);
+      return {
+        statusCode: HttpStatus.OK,
+        data: todos,
+      };
+    } catch (err) {
+      throw new HttpException(
+        {
+          message: 'サーバーエラー: ' + err.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   // タスク更新
   @UseGuards(AuthGuard)
   @Put('/update')

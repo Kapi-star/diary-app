@@ -196,7 +196,7 @@ paths:
       tags:
         - todo
       summary: タスク一覧取得
-      description: タスク内容の一部を全件取得します
+      description: タスク内容の一部を取得します
       operationId: getTodo
       security:
         - Bearer: []
@@ -278,6 +278,40 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TodoOne"
+        "401":
+          description: 認証エラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+  /todo/byDate:
+    get:
+      tags:
+        - todo
+      summary: 日付からタスク一覧取得
+      description: 日付が一致するタスク内容の一部を取得します
+      operationId: getTodoByDate
+      security:
+        - Bearer: []
+      parameters:
+        - name: date
+          in: query
+          description: 取得したい日付
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todos"
         "401":
           description: 認証エラー
           content:
@@ -603,11 +637,6 @@ components:
         title:
           type: string
           example: 1日個人開発
-        todo:
-          type: array
-          items:
-            type: string
-            format: uuid
         timeSchedule:
           $ref: "#/components/schemas/timeSchedule"
         timeScheduleResult:
@@ -655,11 +684,6 @@ components:
             title:
               type: string
               example: "1日個人開発"
-            todo:
-              type: array
-              items:
-                type: string
-                format: uuid
             timeSchedule:
               $ref: "#/components/schemas/timeSchedule"
             timeScheduleResult:

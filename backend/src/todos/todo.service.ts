@@ -48,6 +48,23 @@ export class TodoService {
     })
   }
 
+  async fetchTodoByDate(userId: string, date: string): Promise<TodoEntity[]> {
+    const today = new Date(date);
+    return await this.todoRepository.find({
+      select: {
+          id: true,
+          title: true,
+          startDate: true,
+          timeRequired:true,
+          isFinished: true,
+      },
+      where: {
+        userId: userId,
+        startDate: today,
+      },
+  })
+}
+
   async updateTodo(userId, todoId, dto: UpdateTodoDTO): Promise<UpdateResult> {
       return await this.todoRepository.update({ id: todoId, userId: userId }, dto);
   }
