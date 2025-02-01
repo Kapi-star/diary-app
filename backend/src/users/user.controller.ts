@@ -10,7 +10,7 @@ import {
   Request,
   Put,
 } from '@nestjs/common';
-import { CreateUserDTO, LoginUserDTO, UpdateUserDTO } from './dto/user.dto';
+import { CreateUserDTO, UpdateUserDTO } from './dto/user.dto';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 
