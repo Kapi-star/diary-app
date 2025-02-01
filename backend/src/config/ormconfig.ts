@@ -3,7 +3,6 @@ import { TodoEntity } from '../todos/entities/todo.entity';
 import { DiaryEntity } from '../diarys/entities/diary.entity';
 import { UserEntity } from '../users/entities/user.entity';
 import { DataSource } from 'typeorm';
-import { InitialMigrations1738274621352 } from "migration/1738274621352-InitialMigrations";
 
 dotenv.config({ path: '../.env' });
 

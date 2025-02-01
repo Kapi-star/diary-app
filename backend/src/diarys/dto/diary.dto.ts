@@ -23,10 +23,6 @@ export class CreateDiaryDTO {
 
   @IsArray()
   @IsOptional()
-  todo: Array<string>;
-
-  @IsArray()
-  @IsOptional()
   timeSchedule: TimeScheduleDTO[];
 
   @IsArray()
@@ -58,10 +54,6 @@ export class UpdateDiaryDTO {
   @IsString()
   @IsNotEmpty()
   title: string;
-
-  @IsArray()
-  @IsOptional()
-  todo: Array<string>;
 
   @IsArray()
   @IsOptional()

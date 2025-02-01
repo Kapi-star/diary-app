@@ -19,9 +19,6 @@ export class DiaryEntity {
   @Column('varchar',  { length: 30, comment: 'タイトル' })
   title: string;
 
-  @Column('text',  { array: true, comment: '今日のタスク', nullable: true })
-  todo?: Array<string>;
-
   @Column('jsonb', { comment: '今日のタイムスケジュール予定', nullable: true })
   timeSchedule?: TimeScheduleDTO[];
 
