@@ -10,6 +10,19 @@ services:
       - ./api/openapi.yaml:/openapi.yaml
     environment:
       SWAGGER_JSON: /openapi.yaml
+  frontend:
+    container_name: "frontend-container"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${FRONTENDPORT}:${CONTAINER_FRONTENDPORT}"
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules
+      - /frontend/.next
   backend:
     container_name: "backend-container"
     build:
