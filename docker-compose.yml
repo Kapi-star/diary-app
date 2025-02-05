@@ -19,6 +19,8 @@ services:
       - .env
     ports:
       - "${FRONTENDPORT}:${CONTAINER_FRONTENDPORT}"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:${CONTAINER_BACKENDPORT}
     volumes:
       - ./frontend:/frontend
       - /frontend/node_modules
