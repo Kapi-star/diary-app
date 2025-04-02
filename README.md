@@ -41,6 +41,12 @@ DB_USERNAME
 DB_PASSWORD
 ```
 
+.env ファイルをfrontendディレクトリに作成。中身は以下です。
+```
+# backendのURL
+NEXT_PUBLIC_URL=http://localhost:0000 #適切なポート番号を入れる
+```
+
 .env ファイルを作成後、以下のコマンドで docker 起動
 
 ```
